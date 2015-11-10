@@ -1,0 +1,19 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xsi:schemaLocation="
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+    http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <bean id="testService" class="com.service.TestService" />
+
+    <!-- ************************* AOP ************************* -->
+    <bean id="exceptionAdvice" class="com.aop.advice.ExceptionAdvice"/>
+    
+    <aop:config>
+        <aop:aspect id="exceptionAdviceAspect" ref="exceptionAdvice">
+            <aop:pointcut expression="execution(* com.service.*.*(..))" id="rsServicePointcut"/>
+            <aop:around method="exceptionHandler" pointcut-ref="rsServicePointcut"  />
+        </aop:aspect>
+    </aop:config> 
+</beans>
